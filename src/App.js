@@ -1,22 +1,38 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function App() {
-  const [count, setCount] = useState(0); //using usestate hook
+  const [number1, setnumber1] = useState(0);
+  const [number2, setnumber2] = useState(0);
+  const [sum, setSum] = useState(); //using usestate hook
+  const refelement = useRef(""); //for dom manipulation
   useEffect(() => {
     console.log("component mounted");
-  }, [count]); //using useEffect
+  }, [number1]); //using useEffect
 
-  function handleClick() {
-    setCount(count + 1);
+  function handleAdd() {
+    setSum(number1 + number2);
+
+    refelement.current.style.color = "red"; // Accessing DOM styles using useRef
   }
   return (
     <div className="App">
-      <h1>REACTTTT</h1>
-
-      <button onClick={handleClick}>Click here</button>
+      <h1>Calculate</h1>
+      <input
+        ref={refelement}
+        type="number"
+        value={number1}
+        onChange={(e) => setnumber1(parseInt(e.target.value))} // convert string to int
+      ></input>
       <br />
-      <span>{count}</span>
+      <input
+        type="number"
+        value={number2}
+        onChange={(e) => setnumber2(parseInt(e.target.value))}
+      ></input>
+      <button onClick={handleAdd}>ADD</button>
+      <br />
+      <span>Result is:{sum}</span>
     </div>
   );
 }
