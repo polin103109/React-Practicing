@@ -2,29 +2,40 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [number1, setnumber1] = useState(0);
-  const [number2, setnumber2] = useState(0);
+  const [allnumbers, setNumbers] = useState({
+    //using object
+    number1: 0,
+    number2: 0,
+  });
+
   const [sum, setSum] = useState(); //using usestate hook
+  function handleInput(e, fieldName) {
+    const value = parseInt(e.target.value);
+    setNumbers((prevNumbers) => ({
+      ...prevNumbers,
+      [fieldName]: value,
+    }));
+  }
 
   function handleAdd() {
-    setSum(number1 + number2);
+    setSum(allnumbers.number1 + allnumbers.number2);
   }
   function handleSubstract() {
-    setSum(number1 - number2);
+    setSum(allnumbers.number1 + allnumbers.number2);
   }
   return (
     <div className="App">
       <h1>Calculate</h1>
       <input
         type="number"
-        value={number1}
-        onChange={(e) => setnumber1(parseInt(e.target.value))} // convert string to int
+        value={allnumbers.number1}
+        onChange={(e) => handleInput(e, "number1")} // convert string to int
       ></input>
       <br />
       <input
         type="number"
-        value={number2}
-        onChange={(e) => setnumber2(parseInt(e.target.value))}
+        value={allnumbers.number2}
+        onChange={(e) => handleInput(e, "number2")}
       ></input>
       <br />
       <button onClick={handleAdd}>ADD</button>
